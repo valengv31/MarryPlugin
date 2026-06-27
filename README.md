@@ -7,7 +7,7 @@ intervenir en cualquier matrimonio.
 
 ## Requisitos
 
-- Java 17 o superior
+- Java 21 o superior
 - Maven 3.6+
 - Servidor Paper o Spigot 1.21.x
 
