@@ -1,4 +1,4 @@
-package com.marryplugin.model;
+package com.marryplugin.models;
 
 import java.util.UUID;
 
@@ -10,13 +10,15 @@ public class Proposal {
     private final UUID proposerId;
     private final String proposerName;
     private final UUID targetId;
+    private final String targetName;
     private final long createdAt;
 
-    public Proposal(UUID proposerId, String proposerName, UUID targetId, long createdAt) {
+    public Proposal(UUID proposerId, String proposerName, UUID targetId,String targetName) {
         this.proposerId = proposerId;
         this.proposerName = proposerName;
         this.targetId = targetId;
-        this.createdAt = createdAt;
+        this.targetName = proposerName;
+        this.createdAt = System.currentTimeMillis();
     }
 
     public UUID getProposerId() {
@@ -29,6 +31,10 @@ public class Proposal {
 
     public UUID getTargetId() {
         return targetId;
+    }
+
+    public String getTargetName() {
+        return targetName;
     }
 
     public long getCreatedAt() {

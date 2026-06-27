@@ -8,7 +8,7 @@ divorce-confirm-seconds: 30
 # Placeholders disponibles según el mensaje: %player%, %target%, %proposer%, %partner%, %player1%, %player2%, %date%, %seconds%, %count%
 messages:
   no-permission: "&cNo tenés permiso para usar este comando."
-  marry-usage: "&eUso: /marry <jugador> | accept | deny | cancel"
+  marry-usage: "&eUso: /marry propose | accept | deny | cancel"
   player-not-found: "&cEl jugador %target% no está conectado."
   cannot-marry-self: "&cNo podés casarte con vos mismo."
   already-married-self: "&cYa estás casado/a. Si querés cambiar de pareja, primero usá /divorce."

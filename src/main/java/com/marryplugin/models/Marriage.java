@@ -1,4 +1,6 @@
-package com.marryplugin.model;
+package com.marryplugin.models;
+
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
@@ -14,12 +16,21 @@ public class Marriage {
     private final String player2Name;
     private final long marriedAt;
 
-    public Marriage(UUID player1Id, String player1Name, UUID player2Id, String player2Name, long marriedAt) {
+
+    public Marriage(UUID player1Id, String player1Name, UUID player2Id, String player2Name,  long marriedAt) {
         this.player1Id = player1Id;
         this.player1Name = player1Name;
         this.player2Id = player2Id;
         this.player2Name = player2Name;
         this.marriedAt = marriedAt;
+    }
+
+    public Marriage(UUID player1Id, String player1Name, UUID player2Id, String player2Name) {
+        this(player1Id, player1Name, player2Id, player2Name, System.currentTimeMillis());
+    }
+
+    public Marriage(OfflinePlayer p1, OfflinePlayer p2){
+        this(p1.getUniqueId(), p1.getName(), p2.getUniqueId(), p2.getName());
     }
 
     public UUID getPlayer1Id() {
