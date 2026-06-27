@@ -1,0 +1,53 @@
+# Segundos que dura una propuesta de matrimonio antes de expirar automáticamente
+proposal-expire-seconds: 60
+
+# Segundos que tenés para confirmar un /divorce con /divorce confirm
+divorce-confirm-seconds: 30
+
+# Todos los mensajes admiten códigos de color con '&' (ej: &a verde, &c rojo)
+# Placeholders disponibles según el mensaje: %player%, %target%, %proposer%, %partner%, %player1%, %player2%, %date%, %seconds%, %count%
+messages:
+  no-permission: "&cNo tenés permiso para usar este comando."
+  marry-usage: "&eUso: /marry <jugador> | accept | deny | cancel"
+  player-not-found: "&cEl jugador %target% no está conectado."
+  cannot-marry-self: "&cNo podés casarte con vos mismo."
+  already-married-self: "&cYa estás casado/a. Si querés cambiar de pareja, primero usá /divorce."
+  target-already-married: "&c%target% ya está casado/a con otra persona."
+  proposal-already-sent: "&eYa tenés una propuesta pendiente. Esperá una respuesta o usá /marry cancel."
+  target-has-pending-proposal: "&e%target% ya tiene una propuesta pendiente de otra persona."
+  proposal-sent: "&aLe propusiste matrimonio a %target%. ¡Esperá su respuesta!"
+  proposal-received: "&d%proposer% te propuso matrimonio. Usá /marry accept o /marry deny."
+  no-pending-proposal: "&cNo tenés ninguna propuesta de matrimonio pendiente."
+  proposer-offline: "&cLa persona que te propuso matrimonio ya no está conectada."
+  proposal-expired: "&cEsa propuesta ya no es válida (alguno de los dos ya está casado)."
+  marriage-success: "&a¡Felicidades! Ahora estás casado/a con %partner%."
+  marriage-broadcast: "&d¡%player1% y %player2% se acaban de casar! &c<3"
+  marriage-db-error: "&cOcurrió un error al guardar el matrimonio en la base de datos. Probá de nuevo en unos segundos."
+  proposal-denied-self: "&eRechazaste la propuesta de matrimonio de %proposer%."
+  proposal-denied-other: "&c%target% rechazó tu propuesta de matrimonio."
+  no-proposal-to-cancel: "&cNo tenés ninguna propuesta para cancelar."
+  proposal-cancelled: "&eCancelaste tu propuesta de matrimonio."
+  not-married: "&cNo estás casado/a con nadie."
+  divorce-confirm-request: "&eVas a divorciarte de %partner%. Escribí /divorce confirm dentro de %seconds% segundos para confirmar."
+  divorce-confirm-expired: "&cYa pasó el tiempo para confirmar el divorcio. Volvé a usar /divorce."
+  divorce-success: "&cTe divorciaste de %partner%."
+  divorce-db-error: "&cOcurrió un error al guardar el divorcio en la base de datos. Probá de nuevo en unos segundos."
+  divorce-notice: "&c%partner% se divorció de vos."
+  status-not-married: "&7%player% no está casado/a."
+  status-married: "&7%player% está casado/a con &f%partner% &7desde el %date%."
+  admin-target-not-married: "&c%target% no está casado/a."
+  admin-divorce-success: "&aSeparaste a %player1% de %player2%."
+  admin-divorce-notice: "&cUn administrador anuló tu matrimonio."
+  admin-force-success: "&aCasaste a %player1% con %player2% a la fuerza."
+  admin-db-error: "&cOcurrió un error al escribir en la base de datos. Revisá la consola del servidor."
+  admin-list-empty: "&7No hay matrimonios registrados."
+  admin-list-header: "&6Matrimonios registrados (%count%):"
+  admin-info: "&6%player1% &7está casado/a con &6%player2% &7desde el %date%."
+  admin-reload: "&aConfiguración recargada y matrimonios resincronizados desde la base de datos."
+
+# Configuración de los placeholders de PlaceholderAPI (%marry_partner%, %marry_status%, %marry_since%).
+# Solo se activan si tenés PlaceholderAPI instalado; si no, esta sección se ignora.
+placeholders:
+  not-married-text: "Soltero/a"
+  married-text: "Casado/a"
+  date-format: "dd/MM/yyyy"

@@ -1,0 +1,32 @@
+name: MarryPlugin
+version: '1.0.0'
+main: com.marryplugin.MarryPlugin
+api-version: '1.21'
+author: TuNombre
+description: Plugin simple de matrimonios con registro y control administrativo
+softdepend: [PlaceholderAPI]
+
+commands:
+  marry:
+    description: Proponer matrimonio o responder a una propuesta
+    usage: /marry <jugador|accept|deny|cancel>
+    permission: marry.use
+  divorce:
+    description: Divorciarte de tu pareja actual
+    usage: /divorce [confirm]
+    permission: marry.use
+  married:
+    description: Ver tu estado civil o el de otro jugador
+    usage: /married [jugador]
+  marryadmin:
+    description: Comandos administrativos para intervenir en matrimonios
+    usage: /marryadmin <divorce|force|list|info|reload> [args]
+    permission: marry.admin
+
+permissions:
+  marry.use:
+    description: Permite usar /marry, /divorce y /married
+    default: true
+  marry.admin:
+    description: Permite usar /marryadmin para intervenir en cualquier matrimonio
+    default: op
