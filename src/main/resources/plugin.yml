@@ -11,17 +11,21 @@ commands:
     description: Proponer matrimonio o responder a una propuesta
     usage: /marry <jugador|accept|deny|cancel>
     permission: marry.use
+    aliases: [casar, casarse]
   divorce:
     description: Divorciarte de tu pareja actual
     usage: /divorce [confirm]
     permission: marry.use
+    aliases: [divorciar, divorciarse]
   married:
     description: Ver tu estado civil o el de otro jugador
     usage: /married [jugador]
+    aliases: [casado, estadocivil]
   marryadmin:
     description: Comandos administrativos para intervenir en matrimonios
     usage: /marryadmin <divorce|force|list|info|reload> [args]
     permission: marry.admin
+    aliases: [madmin]
 
 permissions:
   marry.use:
