@@ -1,6 +1,8 @@
-package com.marryplugin;
+package com.marryplugin.integrations;
 
-import com.marryplugin.model.Marriage;
+import com.marryplugin.Config;
+import com.marryplugin.services.MarriageManager;
+import com.marryplugin.models.Marriage;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -22,10 +24,12 @@ import java.util.Date;
  */
 public class MarryPlaceholders extends PlaceholderExpansion {
 
-    private final MarryPlugin plugin;
+    private MarriageManager marriageManager;
+    private Config config;
 
-    public MarryPlaceholders(MarryPlugin plugin) {
-        this.plugin = plugin;
+    public MarryPlaceholders(MarriageManager marriageManager, Config config) {
+        this.marriageManager = marriageManager;
+        this.config = config;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class MarryPlaceholders extends PlaceholderExpansion {
 
     @Override
     public String getVersion() {
-        return plugin.getDescription().getVersion();
+        return "1.0.0";
     }
 
     @Override
@@ -56,8 +60,8 @@ public class MarryPlaceholders extends PlaceholderExpansion {
             return "";
         }
 
-        Marriage marriage = plugin.getMarriageManager().getMarriage(player.getUniqueId());
-        String notMarriedText = plugin.getConfig().getString("placeholders.not-married-text", "Soltero/a");
+        Marriage marriage = marriageManager.getMarriage(player.getUniqueId());
+        String notMarriedText = config.getString("placeholders.not-marry-text", "Soltero/a");
 
         switch (identifier.toLowerCase()) {
             case "partner":
@@ -65,13 +69,13 @@ public class MarryPlaceholders extends PlaceholderExpansion {
 
             case "status":
                 if (marriage != null) {
-                    return plugin.getConfig().getString("placeholders.married-text", "Casado/a");
+                    return config.getString("placeholders.marry-text", "Casado/a");
                 }
                 return notMarriedText;
 
             case "since":
                 if (marriage == null) return "";
-                String format = plugin.getConfig().getString("placeholders.date-format", "dd/MM/yyyy");
+                String format = config.getString("placeholders.date-format", "dd/MM/yyyy");
                 return new SimpleDateFormat(format).format(new Date(marriage.getMarriedAt()));
 
             default:

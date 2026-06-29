@@ -1,47 +1,50 @@
 package com.marryplugin;
 
-import com.marryplugin.commands.DivorceCommand;
+import com.marryplugin.commands.divorce.DivorceCommand;
 import com.marryplugin.commands.MarriedCommand;
-import com.marryplugin.commands.MarryAdminCommand;
-import com.marryplugin.commands.MarryCommand;
-import org.bukkit.ChatColor;
+import com.marryplugin.commands.admin.MarryAdminCommand;
+import com.marryplugin.commands.marry.MarryCommand;
+import com.marryplugin.integrations.MarryPlaceholders;
+import com.marryplugin.services.MarriageManager;
+import com.marryplugin.utils.Scheduler;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Logger;
 
 public class MarryPlugin extends JavaPlugin {
 
-    private static MarryPlugin instance;
     private MarriageManager marriageManager;
     private MarryPlaceholders placeholders;
+    private Config config;
+    private Logger logger;
 
     @Override
     public void onEnable() {
-        instance = this;
+        this.logger = getLogger();
+        this.config = new Config(this);
+        this.marriageManager = new MarriageManager(this,config);
+        Scheduler.init(this);
 
-        saveDefaultConfig();
-        getDataFolder().mkdirs();
+        registerCommands();
+        registerIntegrations();
+        logger.info("MarryPlugin habilitado correctamente.");
+    }
 
-        this.marriageManager = new MarriageManager(this);
+    private void registerCommands(){
+        getCommand("marry").setExecutor(new MarryCommand(this.marriageManager,config));
+        getCommand("divorce").setExecutor(new DivorceCommand(this.marriageManager,config));
+        getCommand("married").setExecutor(new MarriedCommand(this.marriageManager,config));
+        getCommand("marryadmin").setExecutor(new MarryAdminCommand(this.marriageManager,config));
+    }
 
-        getCommand("marry").setExecutor(new MarryCommand(this));
-        getCommand("divorce").setExecutor(new DivorceCommand(this));
-        getCommand("married").setExecutor(new MarriedCommand(this));
-        getCommand("marryadmin").setExecutor(new MarryAdminCommand(this));
-
-        // Limpia propuestas vencidas cada 10 segundos.
-        long expireSeconds = getConfig().getLong("proposal-expire-seconds", 60);
-        getServer().getScheduler().runTaskTimer(this,
-                () -> marriageManager.cleanExpiredProposals(expireSeconds * 1000L),
-                20L * 10, 20L * 10);
-
+    private void registerIntegrations(){
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            this.placeholders = new MarryPlaceholders(this);
+            this.placeholders = new MarryPlaceholders(this.marriageManager, this.config);
             this.placeholders.register();
-            getLogger().info("Integración con PlaceholderAPI activada (%marry_partner%, %marry_status%, %marry_since%).");
+            logger.info("Integración con PlaceholderAPI activada (%marry_partner%, %marry_status%, %marry_since%).");
         } else {
-            getLogger().info("PlaceholderAPI no está instalado. El plugin funciona igual, pero esos placeholders no van a estar disponibles.");
+            logger.info("PlaceholderAPI no está instalado. El plugin funciona igual, pero esos placeholders no van a estar disponibles.");
         }
-
-        getLogger().info("MarryPlugin habilitado correctamente.");
     }
 
     @Override
@@ -50,24 +53,8 @@ public class MarryPlugin extends JavaPlugin {
             placeholders.unregister();
         }
         if (marriageManager != null) {
-            marriageManager.close();
+            marriageManager.stop();
         }
-        getLogger().info("MarryPlugin deshabilitado correctamente.");
-    }
-
-    public static MarryPlugin getInstance() {
-        return instance;
-    }
-
-    public MarriageManager getMarriageManager() {
-        return marriageManager;
-    }
-
-    /**
-     * Obtiene un mensaje del config.yml ya traducido (códigos de color '&').
-     */
-    public String msg(String path) {
-        String raw = getConfig().getString("messages." + path, "&cMensaje no configurado: " + path);
-        return ChatColor.translateAlternateColorCodes('&', raw);
+        logger.info("MarryPlugin deshabilitado correctamente.");
     }
 }

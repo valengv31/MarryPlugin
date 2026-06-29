@@ -29,7 +29,7 @@ commands:
 
 permissions:
   marry.use:
-    description: Permite usar /marry, /divorce y /married
+    description: Permite usar /marry, /divorce y /marry
     default: true
   marry.admin:
     description: Permite usar /marryadmin para intervenir en cualquier matrimonio
